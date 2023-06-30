@@ -8,7 +8,12 @@ function list() {
       .groupBy("m.movie_id");
   }
   
+function read(movieId) {
+  return knex("movies")
+    .select("*")
+    .where("movie_id", movieId)
+}
 
 module.exports = {
-    list,
+    list, read, 
 }

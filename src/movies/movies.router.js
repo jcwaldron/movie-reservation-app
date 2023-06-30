@@ -4,7 +4,13 @@ const methodNotAllowed = require("../errors/methodNotAllowed");
 const cors = require("cors");
 
 router.route("/")
-    .get(cors(), controller.list)
+    .all(cors())
+    .get(controller.list)
+    .all(methodNotAllowed);
+
+router.route("/:movieId")
+    .all(cors())
+    .get(controller.read)
     .all(methodNotAllowed);
 
 module.exports = router;

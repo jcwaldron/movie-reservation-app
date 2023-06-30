@@ -9,44 +9,52 @@ async function list(req, res){
 async function read(req, res) {
     const { reviewId } = req.params;
     const data = await service.read(reviewId);
-    res.json({ data });
+    const foundReview = data[0]
+    res.json( foundReview );
   }
 
   async function reviewIdExists(req, res, next) {
     const { reviewId } = req.params;
     const foundReview = await service.read(reviewId);
   
-    if (foundReview) {
+    if (foundReview.length) {
       res.locals.review = foundReview;
       return next();
     }
   
     next({
       status: 404,
-      message: `id not found: ${req.params.reviewId}`,
+      message: `/cannot be found/i`,
     });
   }
-
-  async function update(req, res, next) {
-    const { reviewId } = req.params;
+  
+/*   async function update(req, res, next) {
     const updatedReview = {
+      ...res.locals.review,
       ...req.body.data,
-      review_id: reviewId
+      review_id: res.locals.review.review_id,
     };
+    const data = await service.update(updatedReview);
+    res.json({ data });
+  } */
   
-    try {
-      const data = await service.update(updatedReview);
-      res.json({ data });
-    } catch (error) {
-      next(error);
-    }
+  function update(req, res) {
+    const { review_id } = res.locals.review;
+    Object.assign(res.locals.review, req.body.data, { review_id });
+    res.json({ data: res.locals.review });
   }
-  
-  
-  
+
+  function destroy(req, res, next) {
+    const {review_id} = res.locals.review;
+    service
+      .destroy(review_id)
+      .then(() => res.sendStatus(204))
+      .catch(next);
+  }
 
 module.exports = {
     list,
     update: [asyncErrorBoundary(reviewIdExists), asyncErrorBoundary(update)],
-    read,
+    read: [reviewIdExists, read],
+    destroy: [reviewIdExists, destroy]
 }

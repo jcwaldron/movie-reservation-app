@@ -12,6 +12,7 @@ router.route("/:reviewId")
     .all(cors())
     .get(controller.read)
     .put(controller.update)
+    .delete(controller.destroy)
     .all(methodNotAllowed);
 
 
