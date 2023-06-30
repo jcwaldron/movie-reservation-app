@@ -6,6 +6,19 @@ async function list(req, res){
     res.json({data})
 }
 
+async function listTheatersForMovie(req, res){
+  const {movieId} = req.params;
+  const data = await service.listTheatersForMovie(movieId);
+  res.json({data})
+}
+
+async function listReviewsForMovie(req, res){
+  const {movieId} = req.params;
+  const data = await service.listReviewsForMovie(movieId);
+  res.json({data})
+}
+
+
 async function read(req, res, next){
     const { movieId } = req.params;
     const [data] = await service.read(movieId);
@@ -29,5 +42,7 @@ async function movieIdExists(req, res, next) {
 
 module.exports = {
     list: asyncErrorBoundary(list),
-    read: [movieIdExists, read]
+    read: [movieIdExists, read],
+    listTheatersForMovie: [movieIdExists, listTheatersForMovie],
+    listReviewsForMovie: [movieIdExists, listReviewsForMovie]
 }

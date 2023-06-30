@@ -8,6 +8,16 @@ router.route("/")
     .get(controller.list)
     .all(methodNotAllowed);
 
+router.route("/:movieId/theaters")
+    .all(cors())
+    .get(controller.listTheatersForMovie)
+    .all(methodNotAllowed);
+
+router.route("/:movieId/reviews")
+    .all(cors())
+    .get(controller.listReviewsForMovie)
+    .all(methodNotAllowed);
+
 router.route("/:movieId")
     .all(cors())
     .get(controller.read)
