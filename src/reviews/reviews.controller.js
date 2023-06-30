@@ -16,33 +16,27 @@ async function read(req, res) {
   async function reviewIdExists(req, res, next) {
     const { reviewId } = req.params;
     const foundReview = await service.read(reviewId);
-  
-    if (foundReview.length) {
+
+    if (foundReview) {
       res.locals.review = foundReview;
       return next();
     }
   
     next({
       status: 404,
-      message: `/cannot be found/i`,
+      message: `Review cannot be found.`,
     });
   }
   
-/*   async function update(req, res, next) {
+  async function update(req, res, next) {
     const updatedReview = {
-      ...res.locals.review,
       ...req.body.data,
       review_id: res.locals.review.review_id,
     };
     const data = await service.update(updatedReview);
     res.json({ data });
-  } */
+  } 
   
-  function update(req, res) {
-    const { review_id } = res.locals.review;
-    Object.assign(res.locals.review, req.body.data, { review_id });
-    res.json({ data: res.locals.review });
-  }
 
   function destroy(req, res, next) {
     const {review_id} = res.locals.review;

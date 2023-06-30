@@ -11,14 +11,6 @@ const addMovies = reduceProperties("theater_id", {
   is_showing: ["movies", null, "is_showing"]
 });
 
-/* async function list() {
-  const theaters = await knex("theaters").select("*");
-  const movies = await knex("movies")
-    .join("movies_theaters", "movies.movie_id", "movies_theaters.movie_id")
-    .select("movies.*", "movies_theaters.theater_id");
-  const data = reduceTheaterAndMovies(theaters, movies);
-  return { data };
-} */
 
 function list() {
   return knex("theaters as t")
