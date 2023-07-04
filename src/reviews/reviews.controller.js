@@ -30,7 +30,7 @@ async function read(req, res) {
   
   async function update(req, res, next) {
     const updatedReview = {
-      ...req.body.data,
+      ...req.body,
       review_id: res.locals.review.review_id,
     };
     const data = await service.update(updatedReview);
