@@ -1,10 +1,12 @@
 const knex = require("../db/connection");
 
+// lists all reviews
 function list() {
     return knex("reviews as r")
     .select("*")
   }
 
+// reads a single review
   function read(reviewId){
     return knex("reviews")
       .select("*")
@@ -12,6 +14,7 @@ function list() {
       .first()
   }
 
+// updates an existing review
   function update(updatedReview) {
     return knex("reviews as r")
       .select("*")
@@ -35,6 +38,7 @@ function list() {
 
   }
 
+// deletes an existing review
   function destroy(review_id) {
     return knex("reviews").where("review_id", review_id).del();
   }

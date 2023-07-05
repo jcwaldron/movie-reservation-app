@@ -16,6 +16,8 @@ function listTheatersForMovie(movieId){
     .where("m.movie_id", movieId)
 }
 
+// listReviewsForMovie requires not only joined tables, but the addition of a new section for the critic's information.
+
 function listReviewsForMovie(movieId) {
   return knex("reviews as r")
     .join("movies as m", "m.movie_id", "r.movie_id")

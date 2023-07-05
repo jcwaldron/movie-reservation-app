@@ -1,11 +1,13 @@
 const service = require("./reviews.service")
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary")
 
+// lists all reviews for all movies
 async function list(req, res){
     const data = await service.list();
     res.json({data})
 }
 
+// retrieves a single review
 async function read(req, res) {
     const { reviewId } = req.params;
     const data = await service.read(reviewId);
@@ -13,6 +15,7 @@ async function read(req, res) {
     res.json( foundReview );
   }
 
+// validates that a review exists in the database
   async function reviewIdExists(req, res, next) {
     const { reviewId } = req.params;
     const foundReview = await service.read(reviewId);
@@ -28,6 +31,7 @@ async function read(req, res) {
     });
   }
   
+// updates an existing review
   async function update(req, res, next) {
     const updatedReview = {
       ...req.body,
@@ -37,7 +41,7 @@ async function read(req, res) {
     res.json({ data });
   } 
   
-
+// deletes an existing review
   function destroy(req, res, next) {
     const {review_id} = res.locals.review;
     service
