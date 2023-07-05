@@ -3,7 +3,7 @@
 ## Overview
 A movie reservation app backend project to demonstrate backend skills including RESTful APIs, routing, Knex, databases, and more. 
 
-You can see the deployed project here:
+You can see the deployed project here: https://movie-reservation-app.onrender.com
 
 ## API Endpoints
 
